@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import axios from 'axios';
 import { NotFound, Login, PrivateRoute } from './components';
-import { Checkout, Menu, OrderConfirmation, Orders } from './pages';
+import { Checkout, Menu, OrderConfirmation } from './pages';
 import GlobalStyle from './styles/global';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser, setMenuData } from './store/actions';
