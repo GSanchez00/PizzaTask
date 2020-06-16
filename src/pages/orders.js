@@ -8,6 +8,7 @@ import { Button, Modal} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { staticCurrency } from '../helpers';
 
+
 const Orders = (props) => {
     const selectedCurrency = useSelector(state => state.currency);
     const [orders, setOrders] = useState([]);
@@ -24,7 +25,7 @@ const Orders = (props) => {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }}
             );
-            //console.log(result);
+            console.log(result);
             setOrders(result.data);
             };
         
@@ -80,6 +81,7 @@ const Orders = (props) => {
             }
             </tbody>
         </table>
+        
         </Layout>
         <Modal show={objModalShow.modalShow}>
           <Modal.Header closeButton>

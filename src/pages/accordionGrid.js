@@ -8,6 +8,7 @@ import { Button, Modal} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { staticCurrency } from '../helpers';
 import { Accordion, Card} from 'react-bootstrap';
+import PaginationBasic from '../components/paginationBasic';
 
 const AccordionGrid = (props) => {
     const selectedCurrency = useSelector(state => state.currency);
@@ -17,7 +18,17 @@ const AccordionGrid = (props) => {
         id: 0
       });
 
-    useEffect(() => {
+      const changePage=async (page)=>{
+        const result = await axios('order?page=' + page,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }}
+        );
+        setOrders(result.data);
+      }
+
+      useEffect(() => {
         const fetchData = async () => {
             const result = await axios('order',{
                 headers: {
@@ -35,7 +46,7 @@ const AccordionGrid = (props) => {
         <>
         <Header />
         <h3 style={{width:"100%", margin:"1%", textAlign:"center"}}>Orders</h3>
-        <Layout>
+        <Layout style={{marginBottom: "20px"}}  >
         <Accordion defaultActiveKey="0" style={{width: "100%"}}>
             <div class="container" style={{width: "100%", marginTop:"3%", textAlign:"center"}}>
                 <div class="row">
@@ -56,8 +67,8 @@ const AccordionGrid = (props) => {
                     </div>
                 </div>
             </div>
-            {   
-                orders.map((order, i)=>
+            {   orders.data &&
+                orders.data.map((order, i)=>
                     (
                     <Card key={i} style={{width: "100%"}}>
                         <Card.Header style={{width: "100%"}}>
@@ -93,8 +104,11 @@ const AccordionGrid = (props) => {
                     )
                 )
             }
-            </Accordion>
+            
+        </Accordion>
         </Layout>
+        <PaginationBasic changePage={changePage} total={orders.total} itemsPerPage={orders.per_page}></PaginationBasic>
+
         <Modal show={objModalShow.modalShow}>
           <Modal.Header closeButton>
             <Modal.Title>Order</Modal.Title>
