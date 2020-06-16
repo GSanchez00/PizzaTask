@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 
-import { setSize } from '../store/actions';
+import { setSize } from '../store/actions/actions';
 import { ClickAreaBase, ItemName, ItemPrice } from '../styles/common';
 import { colors } from '../styles/variables';
 import Input from './input';

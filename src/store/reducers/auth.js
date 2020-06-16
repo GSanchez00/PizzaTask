@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import * as actionTypes from '../actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 import isEmpty from 'is-empty'
 
 export default (state = initialState.auth, action) => {

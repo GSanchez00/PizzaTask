@@ -20,6 +20,8 @@ export default {
   {
     pizzas:[],
     sizes:[],
-    parameters:[]
+    parameters:[],
+    isFetching: false,
+    errorMessage: ""
   }
 };

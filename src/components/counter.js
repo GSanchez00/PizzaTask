@@ -33,21 +33,25 @@ const Counter = (props) =>
 	}
 
 	const _increase = (value) => {
+		let changeValue;
 		if( value === '' || value >= max ) {
-			setCount(max) // fallback to min value
+			changeValue=max;
 		} else {
-			setCount(count + 1);
+			changeValue=count + 1;
 		}
-		props.onPlusClick(count + 1);
+		setCount(changeValue);
+		props.onPlusClick(changeValue);
 	}
 
 	const _decrease = (value) => {
+		let changeValue;
 		if( value === '' || value <= min) {
-			setCount(min) 
+			changeValue=min;
 		} else {
-			setCount(count - 1);
+			changeValue=count - 1;
 		}
-		props.onMinusClick(count - 1);
+		setCount(changeValue);
+		props.onMinusClick(changeValue);
 	}
 
 	return (

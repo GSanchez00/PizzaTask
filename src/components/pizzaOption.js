@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setType } from '../store/actions';
+import { setType } from '../store/actions/actions';
 import styled from 'styled-components/macro';
 import { ClickAreaBase, ItemPizzaName, ItemPizzaPrice } from '../styles/common';
 import { colors } from '../styles/variables';

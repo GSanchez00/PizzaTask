@@ -5,12 +5,14 @@ import { NotFound, Login, PrivateRoute } from './components';
 import { Checkout, Menu, OrderConfirmation } from './pages';
 import GlobalStyle from './styles/global';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentUser, setMenuData } from './store/actions';
-
+import { setCurrentUser } from './store/actions/actions';
 import AccordionGrid from './pages/accordionGrid';
+import {fetchPizzas} from './store/actions/pizzaAction'
+import {fetchSizes} from './store/actions/sizeAction'
+import {fetchParameters} from './store/actions/parameterAction'
+import Loading from './components/loading'
 
 const App = () => {
-  console.log("*******************APP*************************")
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const menuData = useSelector(state => state.menuData);
@@ -22,25 +24,10 @@ const App = () => {
   )
   
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("*******************APP*************************");
-      console.log("fetchData");
-      const menuPizzas = await axios("pizza");
-      const menuSizes = await axios("size");
-      const menuParameters = await axios("parameter");
-      var data = {
-        "pizzas": menuPizzas.data,
-        "sizes": menuSizes.data,
-        "parameters": menuParameters.data,
-      }
-      console.log("SET MENU DATA")
-      console.log(data);
-      dispatch(setMenuData(data))
-      
-    };
-
-    fetchData();
-  }, [dispatch]);
+      dispatch(fetchPizzas());
+      dispatch(fetchSizes());
+      dispatch(fetchParameters());
+  },[]);
 
   const errorHandler = (error) => {
     if (error.response && error.response.status === 401) {
@@ -66,6 +53,14 @@ const App = () => {
   }
   */
   
+  if (menuData.isFetching) {
+    return <Loading />
+  }
+  if (menuData.errorMessage) {
+    console.log(menuData);
+    return <div style={{color: 'red'}}>ERROR: {menuData.errorMessage}</div>
+  }
+
   return(
   <>
     <GlobalStyle />

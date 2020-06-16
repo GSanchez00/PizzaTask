@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import * as actionTypes from '../actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 export default (state = initialState.size, action) => {
   switch (action.type) {
@@ -19,6 +19,7 @@ export default (state = initialState.size, action) => {
       return {
         ...initialState.size,
       };
+
 
     default:
       return state;

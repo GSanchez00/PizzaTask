@@ -15,7 +15,7 @@ import {
 } from './style';
 
 import { capitalize, currency } from '../../helpers';
-import { deletePizza, changePizzaQuantity } from '../../store/actions';
+import { deletePizza, changePizzaQuantity } from '../../store/actions/actions';
 import ModalDelete from '../modals/modalDelete';
 import Counter from '../counter';
 

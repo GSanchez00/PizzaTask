@@ -1,5 +1,5 @@
-import React, { useState, useReducer } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import styled from 'styled-components/macro';
 import axios from 'axios';
@@ -19,47 +19,23 @@ export const Form = styled.form`
   width: ${mainSectionWidth}px;
 `;
 
-const dataPostReducer = (state, action) => {
-  switch (action.type) {
-    case 'FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isError: false
-      };
-    case 'FETCH_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false
-      };
-    case 'FETCH_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-      };
-    default:
-      throw new Error();
-  }
-};
-
-const initialData = {};
-
 const Checkout = ({ match }) => {
   const dispatch = useDispatch();
   const pizzas = useSelector(state => state.selectedPizzas);
-  
+  const [isLoading, setIsLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [contactError, setContactError] = useState(false);
   const [addressError, setAddressError] = useState(false);
-  const [contactState, setContactDetails] = useState({fullName: '', phoneNumber: ''});
-  const [addressState, setAddressDetails] = useState({street: '', houseNumber: '', zipCode: ''});
 
-  const [postState, localDispatch] = useReducer(dataPostReducer, {
-    isLoading: false,
-    isError: false,
-    data: initialData,
+  const [contactState, setContactDetails] = useState({
+    fullName: '',
+    phoneNumber: '',
+  });
+
+  const [addressState, setAddressDetails] = useState({
+    street: '',
+    houseNumber: '',
+    zipCode: '',
   });
 
   const handleContactChange = e => {
@@ -122,16 +98,15 @@ const Checkout = ({ match }) => {
       }
     };
 
-
-    localDispatch({ type: 'FETCH_INIT' });
+    
+    setIsLoading(true);
     axios.post("order", { order })
     .then(function (response) {
-      localDispatch({ type: 'FETCH_SUCCESS' });
+      setIsLoading(false);
       dispatch(deletePizzas());
       setOrderPlaced(true);
     })
     .catch(function (error) {
-      localDispatch({ type: 'FETCH_FAILURE' });
     });
   };
 
@@ -161,7 +136,7 @@ const Checkout = ({ match }) => {
 
         <OrderSummary readOnly={true} {...match} />
       </Layout>
-      <LoadingOverlay visible={postState.isLoading} />
+      <LoadingOverlay visible={isLoading} />
     </>
   );
 };

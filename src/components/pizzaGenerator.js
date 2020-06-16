@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GenericModal from './modals/genericModal';
-import { createPizza, deleteType, deleteSize } from '../store/actions';
+import { createPizza, deleteType, deleteSize } from '../store/actions/actions';
 import ButtonElement, { CustomContent } from './buttonElement';
 import { currency } from '../helpers';
 

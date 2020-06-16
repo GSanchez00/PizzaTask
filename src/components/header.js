@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { setCurrency } from '../store/actions';
+import { setCurrency } from '../store/actions/actions';
 
 import { Nav, Navbar} from 'react-bootstrap'
 
